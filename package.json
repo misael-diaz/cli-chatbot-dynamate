@@ -1,0 +1,21 @@
+{
+  "name": "cli-chatbot-dynamate",
+  "version": "1.0.0",
+  "description": "dynamate chatbot implementation with node.js",
+  "homepage": "https://github.com/misael-diaz/cli-chatbot-dynamate#readme",
+  "bugs": {
+    "url": "https://github.com/misael-diaz/cli-chatbot-dynamate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misael-diaz/cli-chatbot-dynamate.git"
+  },
+  "license": "MIT",
+  "author": "misael-diaz",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {}
+}
