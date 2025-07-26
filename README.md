@@ -1,9 +1,10 @@
 # cli-chatbot-dynamate
-my version of the dynamate chatbot, the original can be found
-[here](https://github.com/omendibleba/DynaMate)
+My version of the dynamate chatbot, the original can be found
+[here](https://github.com/omendibleba/DynaMate).
 
-at the present moment this is a work in progress and there's nothing interesting here
-yet
+At the present moment this is a work in progress and there's nothing interesting here
+yet at least for those interested in using this application to interact with dynamate
+tools.
 
 ## Prerequisites
 
