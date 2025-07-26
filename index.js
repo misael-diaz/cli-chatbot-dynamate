@@ -14,17 +14,7 @@ async function models() {
 	console.log(dat);
 }
 
-async function chat(msg) {
-	const data = {
-		model: model,
-		messages: [
-			{
-				role: "user",
-				content: msg,
-			},
-		],
-		stream: false,
-	};
+async function chat(data) {
 	const uri = `http://${host}:${port}/api/chat`;
 	const res = await fetch(uri, {
 		method: "POST",
@@ -33,12 +23,19 @@ async function chat(msg) {
 		},
 		body: JSON.stringify(data),
 	});
-	const dat = await res.json();
-	console.log(dat);
+	const d = await res.json();
+	const msg = d.message;
+	data.messages.push(msg);
+	console.log(msg);
 }
 
 async function prompt() {
 	let sw = false;
+	const data = {
+		model: model,
+		messages: [],
+		stream: false,
+	};
 	while (true) {
 		const res = await rl.question("prompt:");
 		if ("quit" === res) {
@@ -46,7 +43,12 @@ async function prompt() {
 		} else if ("models" == res) {
 			await models();
 		} else {
-			await chat(res);
+			const msg = res;
+			data.messages.push({
+				role: "user",
+				content: msg,
+			});
+			await chat(data);
 		}
 		if (sw) {
 			rl.close();
