@@ -1,21 +1,7 @@
 "use strict";
 
 const { host, port, model } = require("../config");
-
-async function chat(data) {
-	const uri = `http://${host}:${port}/api/chat`;
-	const res = await fetch(uri, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	});
-	const d = await res.json();
-	const msg = d.message;
-	data.messages.push(msg);
-	console.log(msg);
-}
+const { models, chat } = require("../tools");
 
 async function test() {
 	const data = {
@@ -28,7 +14,7 @@ async function test() {
 		],
 		stream: false,
 	};
-	await chat(data);
+	await chat(host, port, data);
 }
 
 if (!model.length) {
