@@ -83,6 +83,16 @@ and this should show the user id and the ids of the groups that the user belongs
 
 In this section I will show you how you can install ollama with docker.
 
+To run an ollama instance execute the following command:
+
+```sh
+docker container run --rm -it -v ollama:/root/.ollama -p 11434:11434 --network host --name Ollama ollama/ollama:latest
+```
+
+this will have the ollama instance running on the foreground, have a bind-mount of the
+`ollama` directory, exposes the service port `11434`, and use the network of the host
+machine for communication with client apps like this one, among other things.
+
 ## Configuration
 
 We use a `.env` file to configure the cli-chatbot application, in which you are expected
