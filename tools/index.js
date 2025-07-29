@@ -1,5 +1,37 @@
 "use strict";
 
+const desDumpInputFile = (
+"Creates a lammps input file given the system temperature in Kelvins and the " +
+"pressure in bar."
+);
+
+const tools = [
+	{
+		type: "function",
+		function: {
+			name: "dumpInputFile",
+			description: desDumpInputFile,
+			parameters: {
+				type: "object",
+				properties: {
+					T: {
+						type: "float",
+						description: "temperature in Kelvins",
+					},
+					P: {
+						type: "float",
+						description: "pressure in bar",
+					}
+				},
+				required: [
+					"T",
+					"P",
+				],
+			},
+		},
+	},
+];
+
 async function models(host, port) {
 	const uri = `http://${host}:${port}/api/tags`;
 	const res = await fetch(uri);
@@ -22,7 +54,7 @@ async function chat(host, port, data) {
 	console.log(msg);
 }
 
-module.exports = { models, chat };
+module.exports = { models, chat, tools };
 
 /*
 

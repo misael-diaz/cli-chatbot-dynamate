@@ -1,7 +1,7 @@
 "use strict";
 
 const { host, port, model } = require("../config");
-const { models, chat } = require("../tools");
+const { models, chat, tools } = require("../tools");
 
 // dumps lammps input file given the Temperature T in Kelvins and the Pressure P in bar
 async function dumpInputFile(T, P) {
