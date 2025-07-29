@@ -22,6 +22,14 @@ might help you get started.
 If you are using a debian based Linux distribution (like Ubuntu or Linux Mint) open up
 a terminal and install docker by following these steps:
 
+First find out your username, you can do that with the following command
+
+```sh
+whoami
+```
+
+you will need it soon enought so bear that in mind.
+
 
 ```sh
 sudo su
@@ -55,15 +63,10 @@ usermod -aG docker $USER
 
 and add your user to the `docker` group, bear in mind that you want to replace `$USER`
 with your username, if you don't then you will be adding the `root` user which already
-has permissions to use docker.
+has permissions to use docker. You already know the username when you executed the
+`whoami` command.
 
-if you need to find out the username use the following command:
-
-```sh
-whoami
-```
-
-an example would be
+an example of the command string would be
 
 ```sh
 usermod -aG docker myusername
