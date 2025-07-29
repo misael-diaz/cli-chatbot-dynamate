@@ -52,6 +52,11 @@ async function chat(host, port, data) {
 	const msg = d.message;
 	data.messages.push(msg);
 	console.log(msg);
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(d);
+		});
+	});
 }
 
 // dumps lammps input file given the Temperature T in Kelvins and the Pressure P in bar
