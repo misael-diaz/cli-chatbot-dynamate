@@ -1,7 +1,7 @@
 "use strict";
 
 const { host, port, model } = require("../config");
-const { models, chat, dumpInputFile, tools } = require("../tools");
+const { models, chat, dumpInputFile, tools, toolHandles } = require("../tools");
 
 async function test0() {
 	const T = 298;
@@ -27,7 +27,31 @@ async function test1() {
 		stream: false,
 	};
 	const d = await chat(host, port, data);
+	const { message: chatMessage } = d;
 	console.log(d);
+	if (chatMessage.tool_calls) {
+		const name = chatMessage.tool_calls[0].function.name;
+		const args = chatMessage.tool_calls[0].function.arguments;
+		if ("dumpInputFile" === name) {
+			const tool = toolHandles.get(name);
+			const { T, P } = args;
+			const result = await tool(T, P);
+			const toolMessage = {
+				role: "tool",
+				content: result,
+				tool_name: name,
+			};
+			console.log(result);
+			data.messages.push(toolMessage);
+			const finalData = {
+				model: data.model,
+				messages: data.messages,
+				stream: data.stream,
+			};
+			const finalResponse = await chat(host, port, finalData);
+			console.log(finalResponse);
+		}
+	}
 }
 
 

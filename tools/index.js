@@ -91,7 +91,13 @@ write_data system_nvt_equil.data
 	});
 }
 
-module.exports = { models, chat, dumpInputFile, tools };
+const toolHandles = new Map([
+	[
+		"dumpInputFile", dumpInputFile
+	],
+]);
+
+module.exports = { models, chat, dumpInputFile, tools, toolHandles };
 
 /*
 
