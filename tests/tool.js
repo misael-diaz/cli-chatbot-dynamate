@@ -10,6 +10,7 @@ async function test0() {
 	console.log(res);
 }
 
+// chat with history and tool calling
 async function test1() {
 	const request = (
 		"Create a lammps input file for a system of temperature of 298 Kelvins " +
