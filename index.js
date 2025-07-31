@@ -2,7 +2,7 @@
 
 const readline = require("node:readline/promises");
 const { host, port, model } = require("./config");
-const { models, chat } = require("./tools");
+const { models, chat, tools } = require("./tools");
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout

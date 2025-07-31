@@ -39,6 +39,7 @@ async function models(host, port) {
 	console.log(dat);
 }
 
+/*
 async function chat(host, port, data) {
 	const uri = `http://${host}:${port}/api/chat`;
 	const res = await fetch(uri, {
@@ -58,8 +59,9 @@ async function chat(host, port, data) {
 		});
 	});
 }
+*/
 
-async function toolchat(host, port, data) {
+async function chat(host, port, data) {
 	const uri = `http://${host}:${port}/api/chat`;
 	const res = await fetch(uri, {
 		method: "POST",
@@ -88,7 +90,7 @@ async function toolchat(host, port, data) {
 			console.log(result);
 			data.messages.push(toolMessage);
 			const { tools, ...finalData } = data;
-			const finalResponse = await toolchat(host, port, finalData);
+			const finalResponse = await chat(host, port, finalData);
 			console.log(finalResponse);
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
@@ -144,7 +146,8 @@ const toolHandles = new Map([
 	],
 ]);
 
-module.exports = { models, chat, toolchat, dumpInputFile, tools, toolHandles };
+//module.exports = { models, chat, toolchat, dumpInputFile, tools, toolHandles };
+module.exports = { models, chat, tools};
 
 /*
 
