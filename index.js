@@ -13,6 +13,7 @@ async function prompt() {
 	const data = {
 		model: model,
 		messages: [],
+		tools: tools,
 		stream: false,
 	};
 	while (true) {
