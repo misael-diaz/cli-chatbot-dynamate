@@ -67,7 +67,13 @@ async function test2() {
 		stream: false,
 	};
 	const d = await toolchat(host, port, data);
+	data.messages.push({
+		role: "user",
+		content: "thank you for your assistance",
+	});
 	console.log(d);
+	const fd = await toolchat(host, port, data);
+	console.log(fd);
 }
 
 
