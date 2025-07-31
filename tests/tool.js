@@ -33,8 +33,8 @@ async function test1() {
 	if (chatMessage.tool_calls) {
 		const name = chatMessage.tool_calls[0].function.name;
 		const args = chatMessage.tool_calls[0].function.arguments;
-		if ("dumpInputFile" === name) {
-			const tool = toolHandles.get(name);
+		const tool = toolHandles.get(name);
+		if (tool) {
 			const { T, P } = args;
 			const result = await tool(T, P);
 			const toolMessage = {
