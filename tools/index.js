@@ -39,28 +39,6 @@ async function models(host, port) {
 	console.log(dat);
 }
 
-/*
-async function chat(host, port, data) {
-	const uri = `http://${host}:${port}/api/chat`;
-	const res = await fetch(uri, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	});
-	const d = await res.json();
-	const msg = d.message;
-	data.messages.push(msg);
-	console.log(msg);
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			resolve(d);
-		});
-	});
-}
-*/
-
 async function chat(host, port, data) {
 	const uri = `http://${host}:${port}/api/chat`;
 	const res = await fetch(uri, {
@@ -146,7 +124,6 @@ const toolHandles = new Map([
 	],
 ]);
 
-//module.exports = { models, chat, toolchat, dumpInputFile, tools, toolHandles };
 module.exports = { models, chat, tools};
 
 /*
