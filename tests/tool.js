@@ -44,11 +44,7 @@ async function test1() {
 			};
 			console.log(result);
 			data.messages.push(toolMessage);
-			const finalData = {
-				model: data.model,
-				messages: data.messages,
-				stream: data.stream,
-			};
+			const { tools, ...finalData } = data;
 			const finalResponse = await chat(host, port, finalData);
 			console.log(finalResponse);
 		}
