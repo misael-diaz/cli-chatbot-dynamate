@@ -17,7 +17,7 @@ async function prompt() {
 		stream: false,
 	};
 	while (true) {
-		const res = await rl.question("prompt:");
+		const res = await rl.question("dynamate:");
 		if ("quit" === res) {
 			sw = true;
 		} else if ("models" == res) {
