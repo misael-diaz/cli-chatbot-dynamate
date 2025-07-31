@@ -1,7 +1,7 @@
 "use strict";
 
 const { host, port, model } = require("../config");
-const { models, chat, dumpInputFile, tools, toolHandles } = require("../tools");
+const { models, chat, toolchat, dumpInputFile, tools, toolHandles } = require("../tools");
 
 async function test0() {
 	const T = 298;
@@ -50,12 +50,33 @@ async function test1() {
 	}
 }
 
+async function test2() {
+	const request = (
+		"Create a lammps input file for a system of temperature of 298 Kelvins " +
+		"and a pressure of 1 bar."
+	);
+	const data = {
+		model: model,
+		messages: [
+			{
+				role: "user",
+				content: request,
+			},
+		],
+		tools: tools,
+		stream: false,
+	};
+	const d = await toolchat(host, port, data);
+	console.log(d);
+}
+
 
 if (!model.length) {
 	console.err(`you need to provide a model name in .env file`);
 } else {
 	test0();
 	test1();
+	test2();
 }
 
 /*

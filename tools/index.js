@@ -59,6 +59,52 @@ async function chat(host, port, data) {
 	});
 }
 
+async function toolchat(host, port, data) {
+	const uri = `http://${host}:${port}/api/chat`;
+	const res = await fetch(uri, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	const d = await res.json();
+	const { message } = d;
+	data.messages.push(message);
+	console.log(message);
+	const { tool_calls } = message;
+	if (tool_calls) {
+		const [ tool_call, ...rest ] = tool_calls;
+		const { function: fun } = tool_call;
+		const { name: name, arguments: args } = fun;
+		const tool = toolHandles.get(name);
+		if (tool) {
+			const result = await tool(args);
+			const toolMessage = {
+				role: "tool",
+				content: result,
+				tool_name: name,
+			};
+			console.log(result);
+			data.messages.push(toolMessage);
+			const { tools, ...finalData } = data;
+			const finalResponse = await toolchat(host, port, finalData);
+			console.log(finalResponse);
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(finalResponse);
+				});
+			});
+		}
+	} else {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve(d);
+			});
+		});
+	}
+}
+
 // dumps lammps input file given the Temperature T in Kelvins and the Pressure P in bar
 async function dumpInputFile(data) {
 	const { T, P } = data;
@@ -98,7 +144,7 @@ const toolHandles = new Map([
 	],
 ]);
 
-module.exports = { models, chat, dumpInputFile, tools, toolHandles };
+module.exports = { models, chat, toolchat, dumpInputFile, tools, toolHandles };
 
 /*
 
