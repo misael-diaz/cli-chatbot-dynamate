@@ -6,7 +6,7 @@ const { models, chat, dumpInputFile, tools, toolHandles } = require("../tools");
 async function test0() {
 	const T = 298;
 	const P = 1;
-	const res = await dumpInputFile(T, P);
+	const res = await dumpInputFile({ T, P });
 	console.log(res);
 }
 
@@ -35,8 +35,7 @@ async function test1() {
 		const args = chatMessage.tool_calls[0].function.arguments;
 		const tool = toolHandles.get(name);
 		if (tool) {
-			const { T, P } = args;
-			const result = await tool(T, P);
+			const result = await tool(args);
 			const toolMessage = {
 				role: "tool",
 				content: result,

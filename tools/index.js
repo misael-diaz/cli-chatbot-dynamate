@@ -60,7 +60,8 @@ async function chat(host, port, data) {
 }
 
 // dumps lammps input file given the Temperature T in Kelvins and the Pressure P in bar
-async function dumpInputFile(T, P) {
+async function dumpInputFile(data) {
+	const { T, P } = data;
 	const input = `
 include "system.in.init"
 read_data "system.data"
