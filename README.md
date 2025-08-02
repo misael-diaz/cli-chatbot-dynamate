@@ -1,10 +1,8 @@
 # cli-chatbot-dynamate
-My version of the dynamate chatbot, the original can be found
-[here](https://github.com/omendibleba/DynaMate).
 
-At the present moment this is a work in progress and there's nothing interesting here
-yet at least for those interested in using this application to interact with dynamate
-tools.
+At the present moment this is a work in progress that has basic command-line interface
+to with chat with an LLM and execute at least one molecular dynamics tool from the
+DynaMate [DynaMate](https://github.com/omendibleba/DynaMate) project.
 
 ## Prerequisites
 
