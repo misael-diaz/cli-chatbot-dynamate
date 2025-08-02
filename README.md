@@ -2,7 +2,7 @@
 
 At the present moment this is a work in progress that has basic command-line interface
 to with chat with an LLM and execute at least one molecular dynamics tool from the
-DynaMate [DynaMate](https://github.com/omendibleba/DynaMate) project.
+[DynaMate](https://github.com/omendibleba/DynaMate) project.
 
 ## Prerequisites
 
