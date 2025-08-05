@@ -1,8 +1,40 @@
 # cli-chatbot-dynamate
 
+This repository host the code that I have written so far on
+[DynaMate](https://github.com/omendibleba/DynaMate), a chatbot
+for assisting scientific researchers in the field of molecular dynamics.
+
+My version of the dynamate chatbot has always been about interacting through a tiny
+command-line based client application with an LLM hosted in a high-performance server.
+The original dynamate project assumes that you will be running the molecular dynamic
+tools locally and that the LLM is a GPT OpenAI model. My point is that both the LLM
+and the molecular dynamics tools should be hosted in a high performance cluster and that
+the LLM should "know" how to submit jobs to cluster resource manager (usually SLURM)
+so that all computing goes through the same management system for efficient computing
+usage.
+
+My position is that if we already
+have high-performance computing clusters we can take avail ourselves of the computing
+resources that we have to power our own tools. If OpenAI goes down, which is not uncommon,
+our stack for conducting research should not be affected, period. For personal use the
+original dynamate project might be sufficient but not for real computing in my opinion.
+
+Another thing is that I do not think that it is so useful to expect to interact with
+an LLM on real time (as with other chabots) because molecular dynamics tools are by
+virtue computationally intensive so it won't make too much sense for instance to wait for
+a large-scale LAMMPS simulation to complete. This is not how computational researchers do
+their work. However this chatbot could help new reseachers stay on top of their work if
+it can help them stay organized (for instance by informing what simulations have
+completed and informating what data is ready for post-processing). I would argue that
+new researchers should not rely on LLM powered tools but instead learn the craft so that
+they can write their own scripts to automate their workflows, takes longer but pays off
+in the long run.
+
 At the present moment this is a work in progress that has basic command-line interface
 to with chat with an LLM and execute at least one molecular dynamics tool from the
-[DynaMate](https://github.com/omendibleba/DynaMate) project.
+dynamate project. I am going to be upfront about stating here that I do not intend to
+build the whole thing on my own and work on this for an indefinite amount of time.
+It's possible that I might work on this for a while and then move on to the next thing.
 
 ## Prerequisites
 
