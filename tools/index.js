@@ -39,8 +39,8 @@ async function models(host, port) {
 	console.log(dat);
 }
 
-async function chat(host, port, data) {
-	const uri = `http://${host}:${port}/api/chat`;
+async function chat(host, port, route, data) {
+	const uri = `http://${host}:${port}/${route}`;
 	const res = await fetch(uri, {
 		method: "POST",
 		headers: {
@@ -49,11 +49,23 @@ async function chat(host, port, data) {
 		body: JSON.stringify(data),
 	});
 	const d = await res.json();
+	if ("api/generate" === route) {
+		const content = d.response;
+		const response = {
+			role: "assistant",
+			content: content,
+		};
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve(response);
+			});
+		});
+	}
 	const { message } = d;
 	data.messages.push(message);
 	console.log(message);
-	const { tool_calls } = message;
-	if (tool_calls) {
+	if (message.tool_calls) {
+		const { tool_calls } = message;
 		const [ tool_call, ...rest ] = tool_calls;
 		const { function: fun } = tool_call;
 		const { name: name, arguments: args } = fun;
@@ -65,10 +77,27 @@ async function chat(host, port, data) {
 				content: result,
 				tool_name: name,
 			};
+			const userMessageIndex = (data.messages.length - 2);
+			const userMessage = data.messages[userMessageIndex];
+			const request = userMessage.content;
+			const prmpt = `
+			The following text is the user request: ${request}.
+			Generate a response for the user request with the following data:
+			${result}
+			`;
+			const compMessage = {
+				role: "user",
+				content: prmpt,
+			};
 			console.log(result);
 			data.messages.push(toolMessage);
-			const { tools, ...finalData } = data;
-			const finalResponse = await chat(host, port, finalData);
+			const d = {
+				model: data.model,
+				prompt: prmpt,
+				stream: false,
+			};
+			const r = "api/generate"
+			const finalResponse = await chat(host, port, r, d);
 			console.log(finalResponse);
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
