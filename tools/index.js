@@ -39,7 +39,8 @@ async function models(host, port) {
 	console.log(dat);
 }
 
-async function chat(host, port, route, data) {
+async function chat(args) {
+	const { host, port, route, data } = args;
 	const uri = `http://${host}:${port}/${route}`;
 	const res = await fetch(uri, {
 		method: "POST",
@@ -96,8 +97,13 @@ async function chat(host, port, route, data) {
 				prompt: prmpt,
 				stream: false,
 			};
-			const r = "api/generate"
-			const finalResponse = await chat(host, port, r, d);
+			const r = "api/generate";
+			const finalResponse = await chat({
+				host: host,
+				port: port,
+				route: r,
+				data: d,
+			});
 			console.log(finalResponse);
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {

@@ -29,7 +29,7 @@ async function prompt() {
 				content: msg,
 			});
 			const route = "api/chat";
-			await chat(host, port, route, data);
+			await chat({host, port, route, data});
 		}
 		if (sw) {
 			rl.close();

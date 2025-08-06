@@ -21,13 +21,13 @@ async function test() {
 		stream: false,
 	};
 	const route = "api/chat";
-	const d = await chat(host, port, route, data);
+	const d = await chat({host, port, route, data});
 	data.messages.push({
 		role: "user",
 		content: "thank you for your assistance",
 	});
 	console.log(d);
-	const fd = await chat(host, port, route, data);
+	const fd = await chat({host, port, route, data});
 	console.log(fd);
 }
 
