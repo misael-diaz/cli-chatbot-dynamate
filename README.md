@@ -125,6 +125,18 @@ could see something like this:
 uid=1003(myusername) gid=1003(myusername) groups=1003(myusername),8(adm),16(dialout),35(cdrom),999(docker)
 ```
 
+You might see you user belonging to more groups, though notice that the last one should
+be the `docker` group as a consequence of the append that you just did.
+
+And you are done with the system administration tasks, it's recommendeded that you
+exit the root shell with the exit command:
+
+```sh
+exit
+```
+
+that should bring you back to your normal user shell session.
+
 ## Ollama
 
 In this section I will show you how you can install ollama with docker.
