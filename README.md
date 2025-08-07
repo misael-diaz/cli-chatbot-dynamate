@@ -46,8 +46,8 @@ get started if you are new.
 
 So if you entirely new to this (meaning Linux, programming, JavaScript, AI, etc.)
 brace yourself but I commend you for exploring this exciting world! I cannot possibly
-teach you everything that you need to know but will try to provide some info that
-might help you get started.
+teach you everything but will try to provide what you need to get started using this
+command-line based chatbot application.
 
 If you are using a debian based Linux distribution (like Ubuntu or Linux Mint) open up
 a terminal and install docker by following these steps:
@@ -58,43 +58,51 @@ First find out your username, you can do that with the following command
 whoami
 ```
 
-you will need it soon enought so bear that in mind.
-
+you will need it soon enough so keep that username around. Next you will need to
+elevate your shell to sysadmin level, the following command will allow you to do just
+that:
 
 ```sh
 sudo su
 ```
 
 this will ask for your user password and grant you system administration control over
-your machine so be careful.
+your machine.
+
+It's a good idea to get the latest info for all the packages that you can install
+from the official package repositories, use the following command to do that:
 
 ```sh
 apt update
 ```
 
-to get the most recent package information
+That should fetch the most recent package information. Now you are in a position
+where you can install docker right from your terminal:
 
 ```sh
 apt install docker
 ```
 
-to install `docker` which will eventually contain your local instance of `ollama` 
+that will install `docker` and that is what you will eventually use to contain your local
+instance of `ollama`. But first you need to create the `docker` group and grant your user
+the permissions to run docker containers by adding it to the `docker` group:
 
 ```sh
 groupadd docker
 ```
 
-to add the `docker` group to your system (only users in this group are allowed to
-run applications shipped with docker)
+That command just added the `docker` group to your system (only users in this group are
+allowed to run applications shipped with docker). The following command will add the
+specified user to the `docker` group, replace `$USER` with your username (the one I asked
+you to find with the `whoami` tool at the beginning of this section):
 
 ```sh
 usermod -aG docker $USER
 ```
 
-and add your user to the `docker` group, bear in mind that you want to replace `$USER`
-with your username, if you don't then you will be adding the `root` user which already
-has permissions to use docker. You already know the username when you executed the
-`whoami` command.
+This should have added your user to the `docker` group, bear in mind that you must
+have replaced `$USER` with your username. If you don't then you will be adding the
+`root` user which already has permissions to use docker.
 
 an example of the command string would be
 
@@ -110,7 +118,12 @@ if you want to verify if it worked simply use this other command:
 id -a myusername
 ```
 
-and this should show the user id and the ids of the groups that the user belongs to.
+and this should show the user id and the ids of the groups that the user belongs to, you
+could see something like this:
+
+```sh
+uid=1003(myusername) gid=1003(myusername) groups=1003(myusername),8(adm),16(dialout),35(cdrom),999(docker)
+```
 
 ## Ollama
 
