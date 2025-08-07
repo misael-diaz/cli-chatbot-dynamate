@@ -22,7 +22,8 @@ original dynamate project might be sufficient but not for real computing in my o
 Another thing is that I do not think that it is so useful to expect to interact with
 an LLM on real time (as with other chabots) because molecular dynamics tools are by
 virtue computationally intensive so it won't make too much sense for instance to wait for
-a large-scale LAMMPS simulation to complete. This is not how computational researchers do
+a large-scale [LAMMPS](https://github.com/lammps/lammps) simulation to complete.
+This is not how computational researchers do
 their work. However this chatbot could help new reseachers stay on top of their work if
 it can help them stay organized (for instance by informing what simulations have
 completed and informing what data is ready for post-processing). I would argue that
