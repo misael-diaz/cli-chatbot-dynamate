@@ -26,9 +26,7 @@ async function test() {
 		role: "user",
 		content: "thank you for your assistance",
 	});
-	console.log(d);
 	const fd = await chat({host, port, route, data});
-	console.log(fd);
 }
 
 if (!model.length) {

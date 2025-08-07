@@ -29,7 +29,8 @@ async function prompt() {
 				content: msg,
 			});
 			const route = "api/chat";
-			await chat({host, port, route, data});
+			const { content } = await chat({host, port, route, data});
+			console.log(content);
 		}
 		if (sw) {
 			rl.close();

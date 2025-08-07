@@ -36,7 +36,6 @@ async function models(host, port) {
 	const uri = `http://${host}:${port}/api/tags`;
 	const res = await fetch(uri);
 	const dat = await res.json();
-	console.log(dat);
 }
 
 async function chat(args) {
@@ -64,7 +63,6 @@ async function chat(args) {
 	}
 	const { message } = d;
 	data.messages.push(message);
-	console.log(message);
 	if (message.tool_calls) {
 		const { tool_calls } = message;
 		const [ tool_call, ...rest ] = tool_calls;
@@ -90,7 +88,6 @@ async function chat(args) {
 				role: "user",
 				content: prmpt,
 			};
-			console.log(result);
 			data.messages.push(toolMessage);
 			const d = {
 				model: data.model,
@@ -104,7 +101,6 @@ async function chat(args) {
 				route: r,
 				data: d,
 			});
-			console.log(finalResponse);
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
 					resolve(finalResponse);
@@ -114,7 +110,7 @@ async function chat(args) {
 	} else {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				resolve(d);
+				resolve(message);
 			});
 		});
 	}
