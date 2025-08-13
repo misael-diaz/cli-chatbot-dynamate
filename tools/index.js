@@ -191,10 +191,22 @@ write_data system_nvt_equil.data
 	});
 }
 
-async function dumpDataFile(data) {
+async function dumpDataFile(p) {
+	const { api, data } = p;
+	const { host, port } = api;
+	const route = "api/tool/mosdef";
+	const uri = `http://${api.host}:${api.port}/${route}`;
+	const res = await fetch(uri, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	const r = await res.json();
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
-			resolve({ data: "TODO" });
+			resolve({ data: r.data });
 		});
 	});
 }
