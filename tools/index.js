@@ -77,8 +77,8 @@ async function models(host, port) {
 }
 
 async function chat(args) {
-	const { host, port, route, data } = args;
-	const uri = `http://${host}:${port}/${route}`;
+	const { llm, api, data } = args;
+	const uri = `http://${llm.host}:${llm.port}/${llm.route}`;
 	const res = await fetch(uri, {
 		method: "POST",
 		headers: {
@@ -87,7 +87,7 @@ async function chat(args) {
 		body: JSON.stringify(data),
 	});
 	const d = await res.json();
-	if ("api/generate" === route) {
+	if ("api/generate" === llm.route) {
 		const content = d.response;
 		const response = {
 			role: "assistant",
@@ -108,10 +108,10 @@ async function chat(args) {
 		const { name: name, arguments: args } = fun;
 		const tool = toolHandles.get(name);
 		if (tool) {
-			const result = await tool(args);
+			const result = await tool({ api: api, data: args });
 			const toolMessage = {
 				role: "tool",
-				content: result,
+				content: result.data,
 				tool_name: name,
 			};
 			const userMessageIndex = (data.messages.length - 2);
@@ -120,7 +120,7 @@ async function chat(args) {
 			const prmpt = `
 			The following text is the user request: ${request}.
 			Generate a response for the user request with the following data:
-			${result}
+			${result.data}
 			`;
 			const compMessage = {
 				role: "user",
@@ -128,15 +128,19 @@ async function chat(args) {
 			};
 			data.messages.push(toolMessage);
 			const d = {
-				model: data.model,
+				model: llm.model,
 				prompt: prmpt,
 				stream: false,
 			};
-			const r = "api/generate";
+			const route = "api/generate";
 			const finalResponse = await chat({
-				host: host,
-				port: port,
-				route: r,
+				llm: {
+					model: llm.model,
+					host: llm.host,
+					port: llm.port,
+					route: route,
+				},
+				api: api,
 				data: d,
 			});
 			return new Promise((resolve, reject) => {
@@ -155,8 +159,8 @@ async function chat(args) {
 }
 
 // dumps lammps input file given the Temperature T in Kelvins and the Pressure P in bar
-async function dumpInputFile(data) {
-	const { T, P } = data;
+async function dumpInputFile(p) {
+	const { T, P } = p.data;
 	const input = `
 include "system.in.init"
 read_data "system.data"
@@ -182,7 +186,7 @@ write_data system_nvt_equil.data
 `;
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
-			resolve(input);
+			resolve({ data: input });
 		});
 	});
 }
@@ -190,7 +194,7 @@ write_data system_nvt_equil.data
 async function dumpDataFile(data) {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
-			resolve("TODO");
+			resolve({ data: "TODO" });
 		});
 	});
 }

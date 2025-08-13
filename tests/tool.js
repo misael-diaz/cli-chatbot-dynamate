@@ -1,7 +1,7 @@
 "use strict";
 
 const config = require("../config");
-const { host, port, model } = config.llm;
+const { llm: llm, api: api } = config;
 const { models, chat, tools } = require("../tools");
 
 // chat with history and tool calling
@@ -11,7 +11,7 @@ async function test() {
 		"and a pressure of 1 bar."
 	);
 	const data = {
-		model: model,
+		model: llm.model,
 		messages: [
 			{
 				role: "user",
@@ -22,15 +22,33 @@ async function test() {
 		stream: false,
 	};
 	const route = "api/chat";
-	const d = await chat({host, port, route, data});
+	const d = await chat({
+		llm: {
+			model: llm.model,
+			host: llm.host,
+			port: llm.port,
+			route: route,
+		},
+		api: api,
+		data: data,
+	});
 	data.messages.push({
 		role: "user",
 		content: "thank you for your assistance",
 	});
-	const fd = await chat({host, port, route, data});
+	const fd = await chat({
+		llm: {
+			model: llm.model,
+			host: llm.host,
+			port: llm.port,
+			route: route,
+		},
+		api: api,
+		data: data,
+	});
 }
 
-if (!model.length) {
+if (!llm.model.length) {
 	console.err(`you need to provide a model name in .env file`);
 } else {
 	test();

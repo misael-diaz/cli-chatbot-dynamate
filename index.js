@@ -2,7 +2,7 @@
 
 const readline = require("node:readline/promises");
 const config = require("./config");
-const { host, port, model } = config.llm;
+const { llm: llm, api: api } = config;
 const { models, chat, tools } = require("./tools");
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -12,7 +12,7 @@ const rl = readline.createInterface({
 async function prompt() {
 	let sw = false;
 	const data = {
-		model: model,
+		model: llm.model,
 		messages: [],
 		tools: tools,
 		stream: false,
@@ -30,7 +30,16 @@ async function prompt() {
 				content: msg,
 			});
 			const route = "api/chat";
-			const { content } = await chat({host, port, route, data});
+			const { content } = await chat({
+				llm: {
+					model: llm.model,
+					host: llm.host,
+					port: llm.port,
+					route: route,
+				},
+				api: api,
+				data: data,
+			});
 			console.log(content);
 		}
 		if (sw) {
@@ -40,7 +49,7 @@ async function prompt() {
 	}
 }
 
-if (!model.length) {
+if (!llm.model.length) {
 	console.err(`you need to provide a model name in .env file`);
 } else {
 	prompt();
