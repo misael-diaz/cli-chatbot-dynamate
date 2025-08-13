@@ -4,6 +4,10 @@ const desDumpInputFile = (
 "Creates a lammps input file given the system temperature in Kelvins and the " +
 "pressure in bar."
 );
+const desDumpDataFile = (
+"Creates a lammps data file given the molecule name, SMILES string, box-length, and " +
+"molecule count."
+);
 
 const tools = [
 	{
@@ -26,6 +30,40 @@ const tools = [
 				required: [
 					"T",
 					"P",
+				],
+			},
+		},
+	},
+	{
+		type: "function",
+		function: {
+			name: "dumpDataFile",
+			description: desDumpDataFile,
+			parameters: {
+				type: "object",
+				properties: {
+					name: {
+						type: "string",
+						description: "molecule name",
+					},
+					smiles: {
+						type: "string",
+						description: "SMILES string",
+					},
+					length: {
+						type: "float",
+						description: "box-length in nanometers",
+					},
+					count: {
+						type: "int",
+						description: "molecule count",
+					},
+				},
+				required: [
+					"name",
+					"smiles",
+					"length",
+					"count",
 				],
 			},
 		},
@@ -149,9 +187,20 @@ write_data system_nvt_equil.data
 	});
 }
 
+async function dumpDataFile(data) {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve("TODO");
+		});
+	});
+}
+
 const toolHandles = new Map([
 	[
 		"dumpInputFile", dumpInputFile
+	],
+	[
+		"dumpDataFile", dumpDataFile
 	],
 ]);
 
