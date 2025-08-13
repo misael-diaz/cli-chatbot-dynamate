@@ -4,9 +4,15 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const config = {
-	host: process.env.HOST || "127.0.0.1",
-	port: process.env.PORT || 8080,
-	model: process.env.MODEL || "",
+	llm: {
+		host: process.env.LLM_HOST || "127.0.0.1",
+		port: process.env.LLM_PORT || 11434,
+		model: process.env.LLM_MODEL || "",
+	},
+	api: {
+		host: process.env.API_HOST || "127.0.0.1",
+		port: process.env.API_PORT || 8080,
+	},
 };
 
 module.exports = config;

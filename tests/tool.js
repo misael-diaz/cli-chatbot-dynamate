@@ -1,6 +1,7 @@
 "use strict";
 
-const { host, port, model } = require("../config");
+const config = require("../config");
+const { host, port, model } = config.llm;
 const { models, chat, tools } = require("../tools");
 
 // chat with history and tool calling

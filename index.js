@@ -1,7 +1,8 @@
 "use strict";
 
 const readline = require("node:readline/promises");
-const { host, port, model } = require("./config");
+const config = require("./config");
+const { host, port, model } = config.llm;
 const { models, chat, tools } = require("./tools");
 const rl = readline.createInterface({
 	input: process.stdin,
