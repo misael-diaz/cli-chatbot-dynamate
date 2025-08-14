@@ -155,17 +155,46 @@ machine for communication with client apps like this one, among other things.
 ## Configuration
 
 We use a `.env` file to configure the cli-chatbot application, in which you are expected
-to set the HOST, PORT, and MODEL:
+to set the host and port of the host running ollama, the LLM model, and the host and port
+of dynamate's tool [API](https://github.com/misael-diaz/api-tools-dynamate):
 
 ```make
-HOST="127.0.0.1"
-PORT=8080
-MODEL="gemma:2b"
+LLM_HOST="127.0.0.1"
+LLM_PORT=11434
+LLM_MODEL="gemma:3b"
+API_HOST="127.0.0.1"
+API_PORT=8000
 ```
 
 these are just examples though we recommend that you setup a SSH tunnel for interacting
-with the LLM if you are not hosting ollama locally. I might add info on setting this up
-later, it might be useful to someone out there.
+with the LLM if you are not hosting ollama locally.
+
+If you use a remote machine for running ollama or dynamate's tool API, it's recommended
+that you do that through SSH via port forwarding:
+
+## SSH Port Forwarding
+
+The main advantages of port forwarding is that the communication is encrypted and that
+you can access remote hosts behind a VPN and/or firewall. Note that a firewall might
+accept incoming SSH connections but filter everything else out so you wouldn't be able
+to do this without port forwarding.
+
+For the time being I am assuming that you have the SSH service running in the remote
+host. I shall add info on setting that up later.
+
+```sh
+ssh -f username@host -L local_port:host:remote_port -N
+```
+
+where `username` and `host` are your username and the hostname (or IP address) of the
+remote machine, `local_port` is the port in your local machine that you want to use, and
+the `remote_port` is the service port in the remote machine. You may use the same ports
+as long that they are not in use by other services in your local machine.
+
+For the sake of clarity the ports that you specify in the `.env` file are the local ports
+if you are going to use port forwarding.
+
+I stronly recommend you to consult the man page for ssh in GNU/Linux for more info.
 
 ## Start
 
